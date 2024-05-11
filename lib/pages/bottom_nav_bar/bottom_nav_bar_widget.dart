@@ -68,7 +68,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    _model.updatePage(() {
+                    setState(() {
                       FFAppState().pageIndex = 0;
                     });
                   },
@@ -109,7 +109,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    _model.updatePage(() {
+                    setState(() {
                       FFAppState().pageIndex = 1;
                     });
                   },
@@ -150,7 +150,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    _model.updatePage(() {
+                    setState(() {
                       FFAppState().pageIndex = 2;
                     });
                   },

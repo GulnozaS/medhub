@@ -26,6 +26,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.initState();
     _model = createModel(context, () => HomePageModel());
 
+    _model.emailTextController ??= TextEditingController();
+    _model.textFieldFocusNode ??= FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -49,14 +52,36 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           iconTheme: IconThemeData(color: FlutterFlowTheme.of(context).primary),
           automaticallyImplyLeading: false,
-          title: Text(
-            'MedHub',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Readex Pro',
-                  color: FlutterFlowTheme.of(context).primary,
-                  fontSize: 28.0,
-                  letterSpacing: 0.0,
-                ),
+          title: InkWell(
+            splashColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            onTap: () async {
+              if (_model.emailTextController.text.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Email required!',
+                    ),
+                  ),
+                );
+                return;
+              }
+              await authManager.resetPassword(
+                email: _model.emailTextController.text,
+                context: context,
+              );
+            },
+            child: Text(
+              'MedHub',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Readex Pro',
+                    color: FlutterFlowTheme.of(context).primary,
+                    fontSize: 28.0,
+                    letterSpacing: 0.0,
+                  ),
+            ),
           ),
           actions: const [],
           centerTitle: false,
@@ -319,6 +344,62 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                    child: TextFormField(
+                      controller: _model.emailTextController,
+                      focusNode: _model.textFieldFocusNode,
+                      autofocus: true,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        labelText: 'Label here...',
+                        labelStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
+                        hintStyle:
+                            FlutterFlowTheme.of(context).labelMedium.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).alternate,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).primary,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: FlutterFlowTheme.of(context).error,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
+                      validator: _model.emailTextControllerValidator
+                          .asValidator(context),
                     ),
                   ),
                 ],

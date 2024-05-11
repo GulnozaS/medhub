@@ -21,6 +21,10 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   late PersonalInfoItemModel personalInfoItemModel6;
   // Model for PersonalInfoItem component.
   late PersonalInfoItemModel personalInfoItemModel7;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? emailTextController;
+  String? Function(BuildContext, String?)? emailTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -50,5 +54,7 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
     personalInfoItemModel5.dispose();
     personalInfoItemModel6.dispose();
     personalInfoItemModel7.dispose();
+    textFieldFocusNode?.dispose();
+    emailTextController?.dispose();
   }
 }
