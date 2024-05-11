@@ -167,6 +167,78 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                     ),
                   ),
+                  StreamBuilder<List<VaccinationHistoryRecord>>(
+                    stream: queryVaccinationHistoryRecord(
+                      parent: currentUserReference,
+                      queryBuilder: (vaccinationHistoryRecord) =>
+                          vaccinationHistoryRecord.orderBy('date',
+                              descending: true),
+                      singleRecord: true,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<VaccinationHistoryRecord>
+                          personalInfoItemVaccinationHistoryRecordList =
+                          snapshot.data!;
+                      // Return an empty Container when the item does not exist.
+                      if (snapshot.data!.isEmpty) {
+                        return Container();
+                      }
+                      final personalInfoItemVaccinationHistoryRecord =
+                          personalInfoItemVaccinationHistoryRecordList
+                                  .isNotEmpty
+                              ? personalInfoItemVaccinationHistoryRecordList
+                                  .first
+                              : null;
+                      return wrapWithModel(
+                        model: _model.personalInfoItemModel6,
+                        updateCallback: () => setState(() {}),
+                        child: PersonalInfoItemWidget(
+                          title: 'Last Vaccination',
+                          info: personalInfoItemVaccinationHistoryRecord!
+                              .vaccinationName,
+                        ),
+                      );
+                    },
+                  ),
+                  InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed('VaccinationsPage');
+                    },
+                    child: Container(
+                      width: 50.0,
+                      height: 30.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Align(
+                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        child: FaIcon(
+                          FontAwesomeIcons.arrowRight,
+                          color: FlutterFlowTheme.of(context).primaryBackground,
+                          size: 16.0,
+                        ),
+                      ),
+                    ),
+                  ),
                   StreamBuilder<List<DiseaseHistoryRecord>>(
                     stream: queryDiseaseHistoryRecord(
                       parent: currentUserReference,
@@ -202,7 +274,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ? personalInfoItemDiseaseHistoryRecordList.first
                               : null;
                       return wrapWithModel(
-                        model: _model.personalInfoItemModel6,
+                        model: _model.personalInfoItemModel7,
                         updateCallback: () => setState(() {}),
                         child: PersonalInfoItemWidget(
                           title: 'Last Disease',
@@ -211,35 +283,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                       );
                     },
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.pushNamed('VaccinationsPage');
-                      },
-                      child: Container(
-                        width: 50.0,
-                        height: 30.0,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primary,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Align(
-                          alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: FaIcon(
-                            FontAwesomeIcons.arrowRight,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            size: 16.0,
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                   Padding(
                     padding:

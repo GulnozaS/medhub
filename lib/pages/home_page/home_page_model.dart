@@ -19,6 +19,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
   late PersonalInfoItemModel personalInfoItemModel5;
   // Model for PersonalInfoItem component.
   late PersonalInfoItemModel personalInfoItemModel6;
+  // Model for PersonalInfoItem component.
+  late PersonalInfoItemModel personalInfoItemModel7;
 
   @override
   void initState(BuildContext context) {
@@ -34,6 +36,8 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
         createModel(context, () => PersonalInfoItemModel());
     personalInfoItemModel6 =
         createModel(context, () => PersonalInfoItemModel());
+    personalInfoItemModel7 =
+        createModel(context, () => PersonalInfoItemModel());
   }
 
   @override
@@ -45,5 +49,6 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
     personalInfoItemModel4.dispose();
     personalInfoItemModel5.dispose();
     personalInfoItemModel6.dispose();
+    personalInfoItemModel7.dispose();
   }
 }
