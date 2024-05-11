@@ -245,7 +245,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                           decoration: const BoxDecoration(),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 20.0),
+                                0.0, 20.0, 0.0, 0.0),
                             child: Builder(
                               builder: (context) {
                                 final hospital = functions
@@ -285,7 +285,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                           decoration: const BoxDecoration(),
                           child: Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 20.0),
+                                0.0, 20.0, 0.0, 0.0),
                             child: Builder(
                               builder: (context) {
                                 final hospital = functions

@@ -33,9 +33,15 @@ List<HospitalsRecord> searchHospital(
 ) {
   List<HospitalsRecord> result = [];
   hospitalsDoc.forEach((element) {
-    if (element.name.toLowerCase().contains(searchText.toLowerCase()) &&
-        element.address.contains(location)) {
-      result.add(element);
+    if (location == "All") {
+      if (element.name.toLowerCase().contains(searchText.toLowerCase())) {
+        result.add(element);
+      }
+    } else {
+      if (element.name.toLowerCase().contains(searchText.toLowerCase()) &&
+          element.address.contains(location)) {
+        result.add(element);
+      }
     }
   });
   return result;
