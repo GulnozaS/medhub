@@ -26,9 +26,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     super.initState();
     _model = createModel(context, () => HomePageModel());
 
-    _model.emailTextController ??= TextEditingController();
-    _model.textFieldFocusNode ??= FocusNode();
-
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -52,36 +49,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           iconTheme: IconThemeData(color: FlutterFlowTheme.of(context).primary),
           automaticallyImplyLeading: false,
-          title: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              if (_model.emailTextController.text.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'Email required!',
-                    ),
-                  ),
-                );
-                return;
-              }
-              await authManager.resetPassword(
-                email: _model.emailTextController.text,
-                context: context,
-              );
-            },
-            child: Text(
-              'MedHub',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Readex Pro',
-                    color: FlutterFlowTheme.of(context).primary,
-                    fontSize: 28.0,
-                    letterSpacing: 0.0,
-                  ),
-            ),
+          title: Text(
+            'MedHub',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Readex Pro',
+                  color: FlutterFlowTheme.of(context).primary,
+                  fontSize: 28.0,
+                  letterSpacing: 0.0,
+                ),
           ),
           actions: const [],
           centerTitle: false,
@@ -192,82 +167,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       ),
                     ),
                   ),
-                  StreamBuilder<List<VaccinationHistoryRecord>>(
-                    stream: queryVaccinationHistoryRecord(
-                      parent: currentUserReference,
-                      queryBuilder: (vaccinationHistoryRecord) =>
-                          vaccinationHistoryRecord.orderBy('date',
-                              descending: true),
-                      singleRecord: true,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                      List<VaccinationHistoryRecord>
-                          personalInfoItemVaccinationHistoryRecordList =
-                          snapshot.data!;
-                      // Return an empty Container when the item does not exist.
-                      if (snapshot.data!.isEmpty) {
-                        return Container();
-                      }
-                      final personalInfoItemVaccinationHistoryRecord =
-                          personalInfoItemVaccinationHistoryRecordList
-                                  .isNotEmpty
-                              ? personalInfoItemVaccinationHistoryRecordList
-                                  .first
-                              : null;
-                      return wrapWithModel(
-                        model: _model.personalInfoItemModel6,
-                        updateCallback: () => setState(() {}),
-                        child: PersonalInfoItemWidget(
-                          title: 'Last Vaccination',
-                          info: personalInfoItemVaccinationHistoryRecord!
-                              .vaccinationName,
-                        ),
-                      );
-                    },
-                  ),
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      context.pushNamed('VaccinationsPage');
-                    },
-                    child: Container(
-                      width: 60.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primary,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Align(
-                        alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20.0, 10.0, 20.0, 10.0),
-                          child: FaIcon(
-                            FontAwesomeIcons.arrowRight,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            size: 20.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   StreamBuilder<List<DiseaseHistoryRecord>>(
                     stream: queryDiseaseHistoryRecord(
                       parent: currentUserReference,
@@ -303,7 +202,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ? personalInfoItemDiseaseHistoryRecordList.first
                               : null;
                       return wrapWithModel(
-                        model: _model.personalInfoItemModel7,
+                        model: _model.personalInfoItemModel6,
                         updateCallback: () => setState(() {}),
                         child: PersonalInfoItemWidget(
                           title: 'Last Disease',
@@ -312,6 +211,35 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                       );
                     },
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(1.0, 0.0, 0.0, 0.0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        context.pushNamed('VaccinationsPage');
+                      },
+                      child: Container(
+                        width: 50.0,
+                        height: 30.0,
+                        decoration: BoxDecoration(
+                          color: FlutterFlowTheme.of(context).primary,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
+                          child: FaIcon(
+                            FontAwesomeIcons.arrowRight,
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            size: 16.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding:
@@ -325,81 +253,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         context.pushNamed('DiseasesPage');
                       },
                       child: Container(
-                        width: 60.0,
+                        width: 50.0,
+                        height: 30.0,
                         decoration: BoxDecoration(
                           color: FlutterFlowTheme.of(context).primary,
                           borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: Align(
                           alignment: const AlignmentDirectional(0.0, 0.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                20.0, 10.0, 20.0, 10.0),
-                            child: FaIcon(
-                              FontAwesomeIcons.arrowRight,
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              size: 20.0,
-                            ),
+                          child: FaIcon(
+                            FontAwesomeIcons.arrowRight,
+                            color:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            size: 16.0,
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
-                    child: TextFormField(
-                      controller: _model.emailTextController,
-                      focusNode: _model.textFieldFocusNode,
-                      autofocus: true,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        labelText: 'Label here...',
-                        labelStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                        hintStyle:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).primary,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
-                          ),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Inter',
-                            letterSpacing: 0.0,
-                          ),
-                      validator: _model.emailTextControllerValidator
-                          .asValidator(context),
                     ),
                   ),
                 ],

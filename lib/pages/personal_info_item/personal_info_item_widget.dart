@@ -80,6 +80,9 @@ class _PersonalInfoItemWidgetState extends State<PersonalInfoItemWidget> {
                       valueOrDefault<String>(
                         widget.info,
                         '30.12.2004',
+                      ).maybeHandleOverflow(
+                        maxChars: 40,
+                        replacement: '…',
                       ),
                       maxLines: 1,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(

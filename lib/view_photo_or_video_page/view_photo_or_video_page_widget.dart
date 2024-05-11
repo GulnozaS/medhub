@@ -71,17 +71,19 @@ class _ViewPhotoOrVideoPageWidgetState
                       ),
                     ),
                   if (!widget.isPhoto!)
-                    FlutterFlowVideoPlayer(
-                      path:
-                          'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-                      videoType: VideoType.network,
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: MediaQuery.sizeOf(context).height * 1.0,
-                      autoPlay: false,
-                      looping: false,
-                      showControls: true,
-                      allowFullScreen: true,
-                      allowPlaybackSpeedMenu: false,
+                    Expanded(
+                      child: FlutterFlowVideoPlayer(
+                        path:
+                            'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+                        videoType: VideoType.network,
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: MediaQuery.sizeOf(context).height * 1.0,
+                        autoPlay: false,
+                        looping: false,
+                        showControls: false,
+                        allowFullScreen: false,
+                        allowPlaybackSpeedMenu: false,
+                      ),
                     ),
                 ],
               ),
