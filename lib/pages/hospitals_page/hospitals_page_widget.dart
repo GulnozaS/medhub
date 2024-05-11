@@ -8,6 +8,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'hospitals_page_model.dart';
 export 'hospitals_page_model.dart';
 
@@ -43,6 +44,8 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return StreamBuilder<List<HospitalsRecord>>(
       stream: queryHospitalsRecord(),
       builder: (context, snapshot) {
@@ -200,7 +203,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                             onChanged: (val) async {
                               setState(() => _model.dropDownValue = val);
                               setState(() {
-                                _model.location = _model.dropDownValue!;
+                                FFAppState().location = _model.dropDownValue!;
                               });
                             },
                             width: 100.0,
@@ -234,7 +237,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                         ),
                       ],
                     ),
-                    if (_model.location == '\"All\"')
+                    if (FFAppState().location == '\"All\"')
                       Expanded(
                         child: Container(
                           width: double.infinity,
@@ -274,7 +277,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                           ),
                         ),
                       ),
-                    if (_model.location != '\"All\"')
+                    if (FFAppState().location != '\"All\"')
                       Expanded(
                         child: Container(
                           width: double.infinity,
@@ -290,7 +293,7 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                                         hospitalsPageHospitalsRecordList
                                             .toList(),
                                         _model.textController.text,
-                                        _model.location)
+                                        FFAppState().location)
                                     .toList();
                                 return MasonryGridView.builder(
                                   gridDelegate:

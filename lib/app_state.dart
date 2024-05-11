@@ -157,4 +157,10 @@ class FFAppState extends ChangeNotifier {
   set daigd(DocumentReference? value) {
     _daigd = value;
   }
+
+  String _location = 'All';
+  String get location => _location;
+  set location(String value) {
+    _location = value;
+  }
 }

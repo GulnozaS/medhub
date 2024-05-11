@@ -4,10 +4,6 @@ import 'hospitals_page_widget.dart' show HospitalsPageWidget;
 import 'package:flutter/material.dart';
 
 class HospitalsPageModel extends FlutterFlowModel<HospitalsPageWidget> {
-  ///  Local state fields for this page.
-
-  String location = 'All';
-
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
