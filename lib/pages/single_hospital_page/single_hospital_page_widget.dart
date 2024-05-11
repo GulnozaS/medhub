@@ -209,17 +209,27 @@ class _SingleHospitalPageWidgetState extends State<SingleHospitalPageWidget> {
                           size: 20.0,
                         ),
                       ),
-                      Text(
-                        valueOrDefault<String>(
-                          widget.hospitalDocument?.websiteUrl,
-                          '-',
+                      InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          await launchURL('https://medion.uz/');
+                        },
+                        child: Text(
+                          valueOrDefault<String>(
+                            widget.hospitalDocument?.websiteUrl,
+                            '-',
+                          ),
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    decoration: TextDecoration.underline,
+                                  ),
                         ),
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Inter',
-                              fontSize: 14.0,
-                              letterSpacing: 0.0,
-                              decoration: TextDecoration.underline,
-                            ),
                       ),
                     ],
                   ),

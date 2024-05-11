@@ -70,7 +70,10 @@ class _ServiceDoctorsWidgetState extends State<ServiceDoctorsWidget> {
             ),
           ),
           title: Text(
-            'Stomotology',
+            valueOrDefault<String>(
+              widget.service,
+              '-',
+            ),
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Readex Pro',
                   color: FlutterFlowTheme.of(context).primary,

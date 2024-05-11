@@ -81,7 +81,7 @@ class _ViewPhotoOrVideoPageWidgetState
                         autoPlay: false,
                         looping: false,
                         showControls: false,
-                        allowFullScreen: false,
+                        allowFullScreen: true,
                         allowPlaybackSpeedMenu: false,
                       ),
                     ),
