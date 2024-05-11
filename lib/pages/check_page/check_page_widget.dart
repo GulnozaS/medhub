@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/analysis_item/analysis_item_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'check_page_model.dart';
@@ -229,22 +230,36 @@ class _CheckPageWidgetState extends State<CheckPageWidget> {
                             ),
                           );
                         }
-                        List<AnalysisRecord> listViewAnalysisRecordList =
+                        List<AnalysisRecord> containerAnalysisRecordList =
                             snapshot.data!;
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewAnalysisRecordList.length,
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewAnalysisRecord =
-                                listViewAnalysisRecordList[listViewIndex];
-                            return AnalysisItemWidget(
-                              key: Key(
-                                  'Keynvp_${listViewIndex}_of_${listViewAnalysisRecordList.length}'),
-                              analysisDocument: listViewAnalysisRecord,
-                            );
-                          },
+                        return Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(),
+                          child: Builder(
+                            builder: (context) {
+                              final analysis = functions
+                                  .searchAnalysis(
+                                      containerAnalysisRecordList.toList(),
+                                      _model.textController.text)
+                                  .toList();
+                              return SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: List.generate(analysis.length,
+                                      (analysisIndex) {
+                                    final analysisItem =
+                                        analysis[analysisIndex];
+                                    return AnalysisItemWidget(
+                                      key: Key(
+                                          'Keynvp_${analysisIndex}_of_${analysis.length}'),
+                                      analysisDocument: analysisItem,
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       },
                     ),
@@ -274,22 +289,36 @@ class _CheckPageWidgetState extends State<CheckPageWidget> {
                             ),
                           );
                         }
-                        List<AnalysisRecord> listViewAnalysisRecordList =
+                        List<AnalysisRecord> containerAnalysisRecordList =
                             snapshot.data!;
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: listViewAnalysisRecordList.length,
-                          itemBuilder: (context, listViewIndex) {
-                            final listViewAnalysisRecord =
-                                listViewAnalysisRecordList[listViewIndex];
-                            return AnalysisItemWidget(
-                              key: Key(
-                                  'Key0w3_${listViewIndex}_of_${listViewAnalysisRecordList.length}'),
-                              analysisDocument: listViewAnalysisRecord,
-                            );
-                          },
+                        return Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(),
+                          child: Builder(
+                            builder: (context) {
+                              final analysisDoc = functions
+                                  .searchAnalysis(
+                                      containerAnalysisRecordList.toList(),
+                                      _model.textController.text)
+                                  .toList();
+                              return SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: List.generate(analysisDoc.length,
+                                      (analysisDocIndex) {
+                                    final analysisDocItem =
+                                        analysisDoc[analysisDocIndex];
+                                    return AnalysisItemWidget(
+                                      key: Key(
+                                          'Key0w3_${analysisDocIndex}_of_${analysisDoc.length}'),
+                                      analysisDocument: analysisDocItem,
+                                    );
+                                  }),
+                                ),
+                              );
+                            },
+                          ),
                         );
                       },
                     ),

@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/pages/hospital_item/hospital_item_widget.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -196,8 +197,12 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                               'Tashkent R',
                               'All'
                             ],
-                            onChanged: (val) =>
-                                setState(() => _model.dropDownValue = val),
+                            onChanged: (val) async {
+                              setState(() => _model.dropDownValue = val);
+                              setState(() {
+                                _model.location = _model.dropDownValue!;
+                              });
+                            },
                             width: 100.0,
                             height: 45.0,
                             textStyle: FlutterFlowTheme.of(context)
@@ -229,35 +234,87 @@ class _HospitalsPageWidgetState extends State<HospitalsPageWidget> {
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 0.0, 20.0),
-                        child: Builder(
-                          builder: (context) {
-                            final hospital =
-                                hospitalsPageHospitalsRecordList.toList();
-                            return MasonryGridView.builder(
-                              gridDelegate:
-                                  const SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                              ),
-                              crossAxisSpacing: 12.0,
-                              mainAxisSpacing: 16.0,
-                              itemCount: hospital.length,
-                              itemBuilder: (context, hospitalIndex) {
-                                final hospitalItem = hospital[hospitalIndex];
-                                return HospitalItemWidget(
-                                  key: Key(
-                                      'Keybef_${hospitalIndex}_of_${hospital.length}'),
-                                  hospitalDocument: hospitalItem,
+                    if (_model.location == '\"All\"')
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 20.0),
+                            child: Builder(
+                              builder: (context) {
+                                final hospital = functions
+                                    .searchHospitalCopy(
+                                        hospitalsPageHospitalsRecordList
+                                            .toList(),
+                                        _model.textController.text)
+                                    .toList();
+                                return MasonryGridView.builder(
+                                  gridDelegate:
+                                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  crossAxisSpacing: 12.0,
+                                  mainAxisSpacing: 16.0,
+                                  itemCount: hospital.length,
+                                  itemBuilder: (context, hospitalIndex) {
+                                    final hospitalItem =
+                                        hospital[hospitalIndex];
+                                    return HospitalItemWidget(
+                                      key: Key(
+                                          'Keybef_${hospitalIndex}_of_${hospital.length}'),
+                                      hospitalDocument: hospitalItem,
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    if (_model.location != '\"All\"')
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 20.0),
+                            child: Builder(
+                              builder: (context) {
+                                final hospital = functions
+                                    .searchHospital(
+                                        hospitalsPageHospitalsRecordList
+                                            .toList(),
+                                        _model.textController.text,
+                                        _model.location)
+                                    .toList();
+                                return MasonryGridView.builder(
+                                  gridDelegate:
+                                      const SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                  ),
+                                  crossAxisSpacing: 12.0,
+                                  mainAxisSpacing: 16.0,
+                                  itemCount: hospital.length,
+                                  itemBuilder: (context, hospitalIndex) {
+                                    final hospitalItem =
+                                        hospital[hospitalIndex];
+                                    return HospitalItemWidget(
+                                      key: Key(
+                                          'Keyc4d_${hospitalIndex}_of_${hospital.length}'),
+                                      hospitalDocument: hospitalItem,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
